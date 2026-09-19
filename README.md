@@ -24,18 +24,38 @@ An enterprise-grade asynchronous document intelligence platform designed to inge
 
 ---
 
-## 🚀 Quickstart (Docker Compose)
+## 🚀 Quickstart & Evaluation (Docker Compose)
 
-Launch the entire stack (PostgreSQL, Redis, FastAPI, Celery Worker, Flower, and Web UI) with a single command:
+> [!NOTE]
+> **Zero Local Dependencies Required**: Evaluators do NOT need to install Python packages, Tesseract OCR, or databases locally. Everything (FastAPI, Celery, Redis, PostgreSQL, Flower, Tesseract OCR system packages) is fully containerized and runs with a single command.
+
+To evaluate and run the complete pipeline:
 
 ```bash
+git clone https://github.com/Rivaldo2309030/docintel-async-pipeline.git
+cd docintel-async-pipeline
 docker compose up --build
 ```
 
-### Access Services:
-- **Web UI & OpenAPI Docs**: [http://localhost:8000](http://localhost:8000)
-- **Celery Flower Dashboard**: [http://localhost:5555](http://localhost:5555)
+### Access Points:
+- **Interactive Web UI**: [http://localhost:8000](http://localhost:8000)
+- **FastAPI OpenAPI Specs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Celery Flower Monitoring**: [http://localhost:5555](http://localhost:5555)
 - **PostgreSQL Database**: `localhost:5432` (`db: docintel`, `user: postgres`, `pass: postgrespassword`)
+
+---
+
+## 🧪 Optional Developer Testing (Local / CI)
+
+*(Optional for local non-Docker development and CI pipeline validation — not required for running the application)*
+
+```bash
+# Install Python dependencies locally
+pip install -r backend/requirements.txt
+
+# Run automated pytest suite
+pytest tests/ -v
+```
 
 ---
 
@@ -67,18 +87,6 @@ docker compose up --build
 └── tests/
     ├── test_ingestion.py    # Unit tests for API endpoints
     └── test_parsers.py      # Unit tests for document parsers
-```
-
----
-
-## 🧪 Running Unit Tests Locally
-
-```bash
-# Install dependencies
-pip install -r backend/requirements.txt
-
-# Run pytest suite
-pytest tests/ -v
 ```
 
 ---
