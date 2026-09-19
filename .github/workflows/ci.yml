@@ -3,8 +3,31 @@ name: CI Pipeline - DocIntel Pipeline
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - 'README.md'
+      - 'report/**'
+      - '*.md'
+      - '*.png'
+      - '*.jpg'
+      - '.gitignore'
+      - 'U1T02.pdf'
+      - 'dexter report format.tex'
   pull_request:
     branches: [ main, master ]
+    paths-ignore:
+      - 'README.md'
+      - 'report/**'
+      - '*.md'
+      - '*.png'
+      - '*.jpg'
+      - '.gitignore'
+      - 'U1T02.pdf'
+      - 'dexter report format.tex'
+
+# Cancel running workflows on rapid commits
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
