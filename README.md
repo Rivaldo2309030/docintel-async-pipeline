@@ -94,6 +94,3 @@ pytest tests/ -v
 ## 📄 IEEE LaTeX Report (Overleaf)
 
 The report deliverable is located at [`report/report.tex`](file:///c:/Users/Rivaldo/Documents/DEXTER/Tarea%202/report/report.tex). It is written in English and follows the official `IEEEtran` document class format matching `dexter report format.tex`. You can directly upload the contents of the `report/` directory to **Overleaf** to compile the PDF.
-
----
-*Maintained by Angel Rivaldo Canche Chuc for U1T02 assignment.*
