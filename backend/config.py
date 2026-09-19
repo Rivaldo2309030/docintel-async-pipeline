@@ -1,11 +1,20 @@
 import os
+import tempfile
+
+def get_default_storage_dir() -> str:
+    env_dir = os.getenv("STORAGE_DIR")
+    if env_dir:
+        return env_dir
+    if os.path.exists("/app") and os.access("/app", os.W_OK):
+        return "/app/storage_data"
+    return os.path.join(tempfile.gettempdir(), "docintel_storage_data")
 
 class Settings:
     PROJECT_NAME: str = "Document Intelligence Pipeline"
     API_V1_STR: str = "/api"
     
     # Storage settings (Claim-Check pattern)
-    STORAGE_DIR: str = os.getenv("STORAGE_DIR", "/app/storage_data")
+    STORAGE_DIR: str = get_default_storage_dir()
     MAX_UPLOAD_SIZE_BYTES: int = 25 * 1024 * 1024  # 25 MB upload limit
     
     ALLOWED_EXTENSIONS: set = {".pdf", ".png", ".jpg", ".jpeg", ".txt"}
