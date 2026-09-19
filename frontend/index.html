@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Intelligence Platform | Async Pipeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-group">
+                <div class="logo-icon">📄⚡</div>
+                <div>
+                    <h1>DocIntel Async Pipeline</h1>
+                    <p class="subtitle">Claim-Check Architecture & Celery/Redis Processing Engine</p>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="status-chip active"><span class="dot"></span> Celery Worker</span>
+                <span class="status-chip active"><span class="dot"></span> Redis Broker</span>
+                <span class="status-chip active"><span class="dot"></span> PostgreSQL DB</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-grid">
+            <!-- Left Column: Upload & Actions -->
+            <section class="card upload-card">
+                <h2>Upload Document</h2>
+                <p class="card-desc">Supported formats: PDF, PNG, JPG/JPEG, TXT (Max 25MB)</p>
+                
+                <div class="drop-zone" id="dropZone">
+                    <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.txt" hidden>
+                    <div class="drop-zone-content">
+                        <div class="upload-icon">📤</div>
+                        <p class="drop-title">Drag & drop your file here</p>
+                        <p class="drop-sub">or <span class="browse-link">browse computer</span></p>
+                    </div>
+                </div>
+
+                <div id="selectedFileInfo" class="file-info-box hidden">
+                    <span id="fileName">file.pdf</span>
+                    <span id="fileSize">1.2 MB</span>
+                    <button id="clearFileBtn" class="icon-btn">&times;</button>
+                </div>
+
+                <button id="uploadBtn" class="btn btn-primary" disabled>
+                    <span>Push to Pipeline</span>
+                </button>
+            </section>
+
+            <!-- Right Column: Live Jobs & Extracted Text -->
+            <section class="card jobs-card">
+                <div class="card-header">
+                    <h2>Processing Queue & Jobs</h2>
+                    <div class="actions-group">
+                        <select id="statusFilter" class="select-input">
+                            <option value="">All Statuses</option>
+                            <option value="QUEUED">QUEUED</option>
+                            <option value="PROCESSING">PROCESSING</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="FAILED">FAILED</option>
+                        </select>
+                        <button id="refreshBtn" class="btn btn-secondary btn-sm">🔄 Refresh</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Format</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Engine</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobsTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">No jobs submitted yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Inspection Drawer / Modal -->
+        <div id="inspectionModal" class="modal hidden">
+            <div class="modal-content card">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Document Intelligence Output</h3>
+                    <button id="closeModalBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="metadata-grid" id="modalMetadata">
+                        <!-- Metadata badges will render here -->
+                    </div>
+
+                    <div class="text-output-section">
+                        <div class="section-title">
+                            <h4>Extracted Machine-Readable Text</h4>
+                            <button id="copyTextBtn" class="btn btn-sm btn-secondary">📋 Copy</button>
+                            <button id="downloadTextBtn" class="btn btn-sm btn-secondary">⬇️ Download</button>
+                        </div>
+                        <pre id="modalExtractedText" class="code-block"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
