@@ -25,6 +25,8 @@ class Settings:
 
     @property
     def DATABASE_URL(self) -> str:
+        if os.getenv("TESTING", "False").lower() in ("true", "1"):
+            return "sqlite:///./test.db"
         return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
     # Redis & Celery Config
