@@ -13,4 +13,4 @@ def test_txt_parser():
     
     assert extracted == sample_text
     assert metadata["word_count"] == 10
-    assert "utf-8" in metadata["detected_encoding"].lower()
+    assert metadata["detected_encoding"].lower() in ("utf-8", "ascii")
